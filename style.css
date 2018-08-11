@@ -3,12 +3,29 @@ body{
 	margin-top: 50px;
 }
 
+p{
+	display: block;
+	text-align: center;
+	margin: 50px 0 50px 0;
+	color:  #e54630;
+}
+
+a{
+	text-decoration: none;
+	color: #5e180e;
+}
+
+a:hover{
+	color: #e54630;
+	text-decoration: underline;
+}
+
 form{
 	width: 250px;
 	padding: 50px 50px 40px 50px;
 	margin: auto;
 	text-align: center;
-	border:1px solid #e54630;
+	border:1px solid;
  	border-radius:5px;
 }
 
