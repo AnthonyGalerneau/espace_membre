@@ -49,11 +49,11 @@ if(isset($_POST['pseudo']) && isset($_POST['email']) && isset($_POST['pass']) &&
 			'email' => htmlspecialchars($_POST['email']),
 			'pass' => $pass_hache));
 	}
-elseif
-{
-	echo 'Au moins un champ n\est pas rempli !';
+// else
+// {
+// 	echo 'Au moins un champ n\est pas rempli !';
+// }
 }
-
 ?>
 
 <!DOCTYPE html>

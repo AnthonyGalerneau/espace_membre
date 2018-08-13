@@ -1,35 +1,40 @@
 <?php 
 
-try {
+try 
+{
     $bdd = new PDO('mysql:host=localhost;dbname=TPespace_membre', 'root', 'root', array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
 
-} catch (Exception $e) {
+} catch (Exception $e) 
+{
     die('Erreur : ' . $e->getMessage());
 }
 
-//  Récupération de l'utilisateur et de son pass hashé
-$req = $bdd->prepare('SELECT id, pass FROM membres WHERE pseudo = :pseudo');
-$req->execute(array(
-    'pseudo' => htmlspecialchars($_POST['pseudo'])));
-$resultat = $req->fetch();
-
-// Comparaison du pass envoyé via le formulaire avec la base
-$isPasswordCorrect = password_verify($_POST['pass'], $resultat['pass']);
-
-if (!$resultat)
+if (isset($_POST['pseudo']) && isset($_POST['pass'])) 
 {
-    echo 'Mauvais identifiant ou mot de passe !<br> <a href="inscription.php"> Inscrivez-vous ici ! </a>';
-}
-else
-{
-    if ($isPasswordCorrect) {
-        session_start();
-        $_SESSION['id'] = $resultat['id'];
-        $_SESSION['pseudo'] = $_POST['pseudo'];
-        echo 'Vous êtes connecté !';
+    //  Récupération de l'utilisateur et de son pass hashé
+    $req = $bdd->prepare('SELECT id, pass FROM membres WHERE pseudo = :pseudo');
+    $req->execute(array(
+        'pseudo' => htmlspecialchars($_POST['pseudo'])));
+    $resultat = $req->fetch();
+
+    // Comparaison du pass envoyé via le formulaire avec la base
+    $isPasswordCorrect = password_verify($_POST['pass'], $resultat['pass']);
+
+    if (!$resultat)
+    {
+        echo '<p>Mauvais identifiant ou mot de passe !<br> <a href="inscription.php"> Inscrivez-vous ici ! </a></p>';
     }
-    else {
-        echo 'Mauvais identifiant ou mot de passe !';
+    else
+    {
+        if ($isPasswordCorrect) {
+            session_start();
+            $_SESSION['id'] = $resultat['id'];
+            $_SESSION['pseudo'] = $_POST['pseudo'];
+            echo '<p>Vous êtes connecté !</p>';
+        }
+        else {
+            echo '<p>Mauvais identifiant ou mot de passe !</p>';
+        }
     }
 }
 ?>
@@ -51,8 +56,9 @@ if (isset($_SESSION['id']) AND isset($_SESSION['pseudo']))
 else
 {
 ?>
+<p>Si vous n'avez pas de compte <a href="inscription.php">inscrivez-vous ici</a></p>
 <form action="" method="post">
-        <legend>Inscrivez-vous :</legend>
+        <legend>Identifiez-vous :</legend>
         <label for="pseudo">Votre identifiant</label>
         <input type="text" name="pseudo" id="pseudo">
         <br>
